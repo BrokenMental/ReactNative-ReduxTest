@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector, useStore } from 'react-redux';
 import ActionCreator from '../actions';
 
 /*
@@ -10,48 +10,44 @@ import ActionCreator from '../actions';
 * connect()는 아래의 인자를 가짐
 * 1. mapStateToProps : Store의 State를 해당 Component의 props로 전달(mapping)
 * 2. mapDispatchToProps : Store의 dispatch를 props에 전달, dispatch()를 통해 Action 생성자에서 생성한 Action을 Store에 전달할 수 있음
+*
+* redux-hook로 변경(function Component)
+* 1. useSelector
+*   - mapStateToProps와 유사한 기능으로 Store state를 데이터에 할당할 수 있도록 하는 함수
+*   - 연결된 Action이 dispatch 될 때 마다 Selector에 접근하여 값을 반환
+*
+* 2. useDispatch
+*   - Store에 설정된 Action Dispatch를 연결하는 함수
 */
-class Count extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+const Count = () => {
+    const dispatch = useDispatch();
+    const count = useSelector((store) => store.count);
 
-  render() {
+    const countUp = (num) => {
+        dispatch(ActionCreator.countUp(num));
+    }
+
+    const countDown = (num) => {
+        dispatch(ActionCreator.countDown(num));
+    }
+
     return (
       <View style={s.container}>
-        <Text style={{ fontSize: 20 }}>{this.props.count}</Text>
-        <TouchableOpacity style={s.upButton} onPress={() => this.props.countUp(1)}>
+        <Text style={{ fontSize: 20 }}>{count}</Text>
+        <TouchableOpacity style={s.upButton} onPress={() => countUp(1)}>
           <Text style={{ fontSize: 20 }}>+1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.upButton} onPress={() => this.props.countUp(2)}>
+        <TouchableOpacity style={s.upButton} onPress={() => countUp(2)}>
           <Text style={{ fontSize: 20 }}>+2</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.downButton} onPress={() => this.props.countUp(-1)}>
+        <TouchableOpacity style={s.downButton} onPress={() => countDown(1)}>
           <Text style={{ fontSize: 20 }}>-1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.downButton} onPress={() => this.props.countUp(-2)}>
+        <TouchableOpacity style={s.downButton} onPress={() => countDown(2)}>
           <Text style={{ fontSize: 20 }}>-2</Text>
         </TouchableOpacity>
       </View>
     );
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    count: state.count
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    countUp: (num) => {
-      dispatch(ActionCreator.countUp(num));
-    },
-    countDown: (num) => {
-      dispatch(ActionCreator.countDown(num));
-    }
-  };
 }
 
 const s = StyleSheet.create({
@@ -74,4 +70,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Count);
+export default Count;
