@@ -8,6 +8,18 @@
 1. redux
 2. react-redux
 
+- redux-hook로 변경(function Component)
+    - import { useDispatch, useSelector } from 'react-redux';
+    - 사용 함수
+        1. useSelector
+            - mapStateToProps와 유사한 기능으로 Store state를 데이터에 할당할 수 있도록 하는 함수
+            - 연결된 Action이 dispatch 될 때 마다 Selector에 접근하여 값을 반환
+
+        2. useDispatch
+            - Store에 설정된 Action Dispatch를 연결하는 함수
+
+참조 : https://medium.com/@trustyoo86/react-redux%EC%9D%98-hooks%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-78f9b8aaa365
+
 
 - Flux Design Pattern : MVC Design Pattern의 단점을 극복하기 위해 만들어진 Pattern
     - MVC는 Model 과 View의 상호작용을 통해 데이터가 전달되는데, View의 Action에 의해 여러 모델을 업데이트하거나 의존성 때문에 필요치 않은 Model의 사용이 발생하는 단점이 있음
