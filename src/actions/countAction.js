@@ -1,4 +1,4 @@
-import types from './types';
+import types from '../commons/types';
 
 /*
 * Action : App의 State를 갖고 있는 Store로 전달되는 데이터 묶음

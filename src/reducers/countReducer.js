@@ -1,4 +1,4 @@
-import types from '../actions/types';
+import types from '../commons/types';
 
 /*
 * Action을 전달받은 Store가 State를 변경하기 위해 reducer에게 어떤 상태변환을 해야하는지 요청
